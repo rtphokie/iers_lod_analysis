@@ -6,6 +6,23 @@ class MyTestCase(unittest.TestCase):
     def test_dl(self):
         download(2022, 31)
 
+    def test_records(self):
+        df = usno()
+        # df_rec=df[df['Bull. A LOD'] < -1.4]
+        # print(df_rec[['Bull. A LOD']])
+        rechigh=None
+        reclow=None
+        for n, row in df[['Bull. A LOD']].iterrows():
+            if rechigh is None:
+                rechigh=row['Bull. A LOD']
+                reclow = row['Bull. A LOD']
+            if rechigh < row['Bull. A LOD']:
+                rechigh=row['Bull. A LOD']
+                print(f"{n} HI {rechigh}")
+            if reclow > row['Bull. A LOD']:
+                reclow=row['Bull. A LOD']
+                print(f"{n} LW {reclow}")
+
     def test_usno_finals(self):
         df = usno()
         import datetime
